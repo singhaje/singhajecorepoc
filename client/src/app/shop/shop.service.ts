@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IBrand } from '../models/brand';
 import { IPagination } from '../models/pagination';
@@ -17,6 +17,10 @@ export class ShopService {
   getProducts(shopParams: ShopParams){
     
     let params = new HttpParams();
+
+    const headers= new HttpHeaders()
+    .set('content-type', 'application/json')
+    .set('Access-Control-Allow-Origin', '*');
 
     if(shopParams.brandId != 0){  
       console.log(shopParams.brandId)    ;
@@ -37,9 +41,9 @@ export class ShopService {
        
     console.log('Param list is ' + params.keys());
 
-    //return this.http.get<IPagination>(this.baseUrl  + 'products?brandId=' + shopParams.brandId  );
-    //return this.http.get<IPagination>(this.baseUrl  + 'products', {params: params})
-    return this.http.get<IPagination>(this.baseUrl  + 'products', {observe: 'response', params})    
+    //return this.http.get<IPagination>(this.baseUrl  + 'products', {'headers': headers}) 
+    //return this.http.get<IPagination>(this.baseUrl  + 'products', {observe: 'response', params}) 
+    return this.http.get<IPagination>('/api/products', {observe: 'response', params}) 
     .pipe(     
       map(response => {
         return response.body;
@@ -48,10 +52,12 @@ export class ShopService {
   }
 
   getBrands(){
-    return this.http.get<IBrand[]>(this.baseUrl  + 'products/brands');    
+    //return this.http.get<IBrand[]>(this.baseUrl  + 'products/brands');    
+    return this.http.get<IBrand[]>('/api/products/brands');  
   }
 
   getTypes(){
-    return this.http.get<IType[]>(this.baseUrl  + 'products/types');    
+    //return this.http.get<IType[]>(this.baseUrl  + 'products/types');    
+    return this.http.get<IType[]>('/api/products/types');    
   }
 }
