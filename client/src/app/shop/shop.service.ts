@@ -10,7 +10,7 @@ import { ShopParams } from '../models/shopParams';
   providedIn: 'root'
 })
 export class ShopService {
-  baseUrl = "https://localhost:5001/api/";
+  baseUrl = "https://localhost:5001/api";
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class ShopService {
 
     //return this.http.get<IPagination>(this.baseUrl  + 'products', {'headers': headers}) 
     //return this.http.get<IPagination>(this.baseUrl  + 'products', {observe: 'response', params}) 
-    return this.http.get<IPagination>('/api/products', {observe: 'response', params}) 
+    return this.http.get<IPagination>(this.baseUrl + '/products', {observe: 'response', params}) 
     .pipe(     
       map(response => {
         return response.body;
@@ -53,11 +53,11 @@ export class ShopService {
 
   getBrands(){
     //return this.http.get<IBrand[]>(this.baseUrl  + 'products/brands');    
-    return this.http.get<IBrand[]>('/api/products/brands');  
+    return this.http.get<IBrand[]>(this.baseUrl +'/products/brands');  
   }
 
   getTypes(){
     //return this.http.get<IType[]>(this.baseUrl  + 'products/types');    
-    return this.http.get<IType[]>('/api/products/types');    
+    return this.http.get<IType[]>(this.baseUrl +'/products/types');    
   }
 }
